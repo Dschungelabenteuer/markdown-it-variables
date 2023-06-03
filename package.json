@@ -30,8 +30,11 @@
       "import": "./dist/index.js"
     }
   },
-  "main": "dist/index.mjs",
-  "types": "src/index.ts",
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "publishConfig": {
+    "types": "./dist/index.d.ts"
+  },
   "files": [
     "dist"
   ],
