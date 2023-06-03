@@ -126,7 +126,13 @@ Here is an overview of how different severities change the behaviour of the plug
     </tr>
   </thead>
   <tbody>
-      <tr>
+    <tr>
+      <td>No variables</td>
+      <td style="text-align: center">❌</td>
+      <td style="text-align: center">❌</td>
+      <td style="text-align: center">❌</td>
+    </tr>
+    <tr>
       <td>Malformatted variable in options</td>
       <td style="text-align: center">❌</td>
       <td style="text-align: center">❌</td>

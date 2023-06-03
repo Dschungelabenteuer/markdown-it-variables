@@ -1,5 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import { render, simpleData, htmlBlocks, mdWrappers, advancedData } from './utils';
+import { UnknownVariableError } from '../src/errors/UnknownVariable';
+import { UnexpectedModifierError } from '../src/errors/UnexpectedModifier';
+import { MissingUrlError } from '../src/errors/MissingUrl';
+import { MissingAbbreviationError } from '../src/errors/MissingAbbreviation';
 
 const { p, pre, code, strong } = htmlBlocks;
 
@@ -92,7 +96,9 @@ describe('Rule', () => {
 
     it('should not throw if severity is set to error', () => {
       const src = baseInput;
-      expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow();
+      expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow(
+        UnknownVariableError,
+      );
     });
 
     it('should ignore if severity is set to error but "ignoreMissingVariables" set to true', () => {
@@ -123,7 +129,9 @@ describe('Rule', () => {
 
     it('should throw if severity is set to error', () => {
       const src = baseInput;
-      expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow();
+      expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow(
+        UnexpectedModifierError,
+      );
     });
 
     it('should ignore if lower severity', () => {
@@ -140,7 +148,7 @@ describe('Rule', () => {
 
     it('should throw if severity is set to error', () => {
       const src = baseInput;
-      expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow();
+      expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow(MissingUrlError);
     });
 
     it('should ignore if lower severity', () => {
@@ -157,7 +165,9 @@ describe('Rule', () => {
 
     it('should throw if severity is set to error', () => {
       const src = baseInput;
-      expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow();
+      expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow(
+        MissingAbbreviationError,
+      );
     });
 
     it('should ignore if lower severity', () => {

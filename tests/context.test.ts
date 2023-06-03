@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { PluginOptions } from '../src/types';
 import { simpleData } from './utils';
 import { PluginContext } from '../src/context';
+import { UnknownVariableTypeError } from '../src/errors/UnknownVariableType';
 
 describe('Context', () => {
   describe('addToLexicon', () => {
@@ -19,12 +20,12 @@ describe('Context', () => {
 
       it('should throw if severity is set to error', () => {
         const options: PluginOptions = { data: invalidData, severity: 'error' };
-        expect(() => new PluginContext(options).lexicon.size).toThrow();
+        expect(() => new PluginContext(options).lexicon.size).toThrow(UnknownVariableTypeError);
       });
 
       it('should still throw even if severity is lower', () => {
         const options: PluginOptions = { data: invalidData, severity: 'warn' };
-        expect(() => new PluginContext(options).lexicon.size).toThrow();
+        expect(() => new PluginContext(options).lexicon.size).toThrow(UnknownVariableTypeError);
       });
     });
   });
