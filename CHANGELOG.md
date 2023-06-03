@@ -1,5 +1,11 @@
 # markdown-it-variables
 
+## 1.1.0
+
+### Minor Changes
+
+- 66418ab: The plugin now throws an explicit error when no variables were set
+
 ## 1.0.2
 
 ### Patch Changes
