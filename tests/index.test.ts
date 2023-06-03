@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { variablesPlugin } from '../src';
 import { MissingVariablesOptions } from '../src/errors/MissingVariablesOption';
 
-describe.only('Plugin', () => {
+describe('Plugin', () => {
   it('should throw if no options was provided', () => {
     expect(() => MarkdownIt().use(variablesPlugin)).toThrow(MissingVariablesOptions);
   });
