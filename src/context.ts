@@ -1,8 +1,10 @@
 import type { RichVariableMap, Lexicon, PluginOptions, Variable, VariableKey } from './types';
+import type { InternalErrors } from './errors';
+
 import { toMap } from './utils';
 import { isSimple } from './variables/simple';
 import { isRich } from './variables/rich';
-import Errors, { InternalErrors } from './errors';
+import Errors from './errors';
 
 export class PluginContext {
   /** Mapped lexicon bases on data passed to plugin options. */

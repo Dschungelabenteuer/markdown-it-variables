@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, simpleData, htmlBlocks, mdWrappers, advancedData } from './utils';
+
 const { p, pre, code, strong } = htmlBlocks;
 
 describe('Rule', () => {

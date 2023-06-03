@@ -1,4 +1,4 @@
-import { HTMLTagDefinition } from './types';
+import type { HTMLTagDefinition } from './types';
 
 /**
  * Determines whether passed `val` argument is an object.
@@ -30,7 +30,8 @@ export const createHtmlTag = ({ tagName, content, attributes }: HTMLTagDefinitio
  */
 const createAttributes = (attributes: HTMLTagDefinition['attributes']) => {
   if (!attributes) return '';
-  return Object.keys(attributes).reduce((output, attribute) => {
-    return output + ` ${attribute}="${attributes[attribute]}"`;
-  }, '');
+  return Object.keys(attributes).reduce(
+    (output, attribute) => `${output} ${attribute}="${attributes[attribute]}"`,
+    '',
+  );
 };

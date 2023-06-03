@@ -1,5 +1,5 @@
 import type MarkdownIt from 'markdown-it';
-import Ruler from 'markdown-it/lib/ruler';
+import type Ruler from 'markdown-it/lib/ruler';
 
 import type { PluginOptions, RuleFunction } from './types';
 import { baseRendererName, baseRuleName } from './config';

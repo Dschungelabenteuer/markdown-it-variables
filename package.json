@@ -1,5 +1,6 @@
 {
   "name": "markdown-it-variables",
+  "type": "module",
   "version": "1.0.0",
   "description": "Use text/link/abbreviations variables in your markdown files",
   "author": "Charles Gruenais",
@@ -13,7 +14,6 @@
   "bugs": {
     "url": "https://github.com/Dschungelabenteuer/markdown-it-variables/issues"
   },
-  "type": "module",
   "keywords": [
     "markdown-it",
     "markdown-it-plugin",
@@ -47,6 +47,9 @@
     "changeset:release": "pnpm build && changeset publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only"
   },
+  "peerDependencies": {
+    "markdown-it": "^13.0.1"
+  },
   "devDependencies": {
     "@changesets/changelog-github": "^0.4.7",
     "@changesets/cli": "^2.25.0",
@@ -60,8 +63,5 @@
     "tsup": "^6.7.0",
     "typescript": "^5.1.3",
     "vitest": "^0.31.1"
-  },
-  "peerDependencies": {
-    "markdown-it": "^13.0.1"
   }
 }

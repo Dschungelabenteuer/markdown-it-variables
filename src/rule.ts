@@ -65,7 +65,7 @@ export function createVariableRule(md: MarkdownIt, options: PluginOptions) {
 
     // Then we move right until the end delimiter.
     let end = start + 1;
-    while (end < state.src.length && state.src[end] !== ruleEndsWith) end++;
+    while (end < state.src.length && state.src[end] !== ruleEndsWith) end += 1;
 
     // Create a token for the inline rule
     const token = state.push(baseRendererName, '', 0);

@@ -12,7 +12,7 @@ const hasLinkModifier: HasModifier = (m) => m.includes('link') || m.includes('#'
  * @param variable Resolved variable from registered list.
  */
 export function isRich(variable: unknown): variable is RichVariable {
-  return isObject(variable) && variable.hasOwnProperty('label');
+  return isObject(variable) && Object.prototype.hasOwnProperty.call(variable, 'label');
 }
 
 /**
