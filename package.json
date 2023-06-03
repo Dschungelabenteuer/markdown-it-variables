@@ -32,8 +32,9 @@
   },
   "main": "dist/index.mjs",
   "types": "src/index.ts",
-  "files": ["dist"],
-
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "watch": "tsup --watch",
     "build": "tsup --minify",
@@ -53,6 +54,7 @@
     "@vitest/coverage-c8": "^0.31.4",
     "@yungezeit/eslint-config-typescript": "^0.0.10",
     "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
     "markdown-it": "^13.0.1",
     "prettier": "^2.8.7",
     "tsup": "^6.7.0",
