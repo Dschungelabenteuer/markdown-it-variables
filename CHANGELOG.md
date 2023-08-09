@@ -1,5 +1,11 @@
 # markdown-it-variables
 
+## 1.1.1
+
+### Patch Changes
+
+- 697385a: Added the ability to wrap variables output in spans with custom class name
+
 ## 1.1.0
 
 ### Minor Changes
