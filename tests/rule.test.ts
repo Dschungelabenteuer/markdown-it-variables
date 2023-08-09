@@ -12,7 +12,7 @@ type TheyParams = { src: string; expected: string; data: Record<string, any> };
 const they = (statement: string, { src, expected, data }: TheyParams) => {
   const run = (className?: string) => {
     const replace = className ? `<span class="${className}">$1</span>` : '$1';
-    const actuallyExpected = p(expected.replace(/<#>(.*?)<\/#>/g, replace));
+    const actuallyExpected = expected.replace(/<#>(.*?)<\/#>/g, replace);
     expect(render({ data, className }, src)).toStrictEqual(actuallyExpected);
   };
 
@@ -32,8 +32,10 @@ describe('Rule', () => {
     they('should transform correctly when everything is fine', {
       src: '**Includes #{simple} and #{rich|link}**',
       data: simpleData,
-      expected: strong(
-        'Includes <#>my simple value</#> and <#><a href="https://github.com">GitHub</a></#>',
+      expected: p(
+        strong(
+          'Includes <#>my simple value</#> and <#><a href="https://github.com">GitHub</a></#>',
+        ),
       ),
     });
 
@@ -43,14 +45,14 @@ describe('Rule', () => {
       they('should correctly create abbreviations', {
         data,
         src: '**Includes #{rich|abbr}**',
-        expected: strong('Includes <#><abbr title="GitHub">GH</abbr></#>'),
+        expected: p(strong('Includes <#><abbr title="GitHub">GH</abbr></#>')),
       });
 
       they('should correctly create abbreviations inside links', {
         data,
         src: '**Includes #{rich|link|abbr}**',
-        expected: strong(
-          'Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>',
+        expected: p(
+          strong('Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>'),
         ),
       });
     });
@@ -61,14 +63,14 @@ describe('Rule', () => {
       they('should correctly create abbreviations', {
         data,
         src: '**Includes #{rich|-}**',
-        expected: strong('Includes <#><abbr title="GitHub">GH</abbr></#>'),
+        expected: p(strong('Includes <#><abbr title="GitHub">GH</abbr></#>')),
       });
 
       they('should correctly create abbreviations inside links', {
         data,
         src: '**Includes #{rich|#|-}**',
-        expected: strong(
-          'Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>',
+        expected: p(
+          strong('Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>'),
         ),
       });
     });

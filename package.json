@@ -1,7 +1,7 @@
 {
   "name": "markdown-it-variables",
   "type": "module",
-  "version": "1.1.0",
+  "version": "1.0.2",
   "description": "Use text/link/abbreviations variables in your markdown files",
   "author": "Charles Gruenais",
   "license": "MIT",
@@ -59,7 +59,7 @@
     "@types/markdown-it": "^12.2.3",
     "@vitest/coverage-c8": "^0.31.4",
     "@yungezeit/eslint-config-typescript": "^0.0.10",
-    "eslint": "^8.42.0",
+    "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.8.0",
     "markdown-it": "^13.0.1",
     "prettier": "^2.8.7",
