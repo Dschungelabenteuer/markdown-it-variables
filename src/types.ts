@@ -55,6 +55,8 @@ export type PluginOptions = {
   data: PluginVariables;
   /** Available log levels. */
   severity?: PluginSeverity;
+  /** Base class name (all outter tags of variables will have it as a class name). */
+  className?: string;
   /** Determines whether non-existant variables should be ignored. */
   ignoreMissingVariables?: boolean;
 };

@@ -4,6 +4,8 @@ import type { PluginOptions } from '../src/types';
 import { variablesPlugin } from '../src';
 import { createHtmlTag } from '../src/utils';
 
+export const exampleClass = 'sampleclass';
+
 /**
  * Sets up the plugin with test options and render the given input.
  * @param options Plugin options.
@@ -16,6 +18,12 @@ export function render(options: PluginOptions, input: string) {
 
 export const htmlBlocks = {
   p: (content: string) => `${createHtmlTag({ content, tagName: 'p' })}\n`,
+  span: (content: string, className?: string) =>
+    `${createHtmlTag({
+      content,
+      tagName: 'span',
+      attributes: className ? { class: className } : undefined,
+    })}\n`,
   pre: (content: string) => `${createHtmlTag({ content, tagName: 'pre' })}\n`,
   strong: (content: string) => `${createHtmlTag({ content, tagName: 'strong' })}`,
   code: (content: string, language?: string) =>

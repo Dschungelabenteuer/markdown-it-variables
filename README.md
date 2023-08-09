@@ -198,6 +198,14 @@ This basically overwrites the above behaviours with the following:
 
 ---
 
+#### `className?: string` (defaults to `undefined`)
+
+When defined, the outter tags of any variable will have the specified class name. When specified and
+encountering variables without modifiers, the variable output will be wrapped in a span with the
+specified class name.
+
+---
+
 ## Example
 
 Based on the options illustrated in the [Usage](#usage) section.

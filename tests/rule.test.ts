@@ -1,76 +1,98 @@
 import { describe, it, expect } from 'vitest';
-import { render, simpleData, htmlBlocks, mdWrappers, advancedData } from './utils';
+import { render, simpleData, htmlBlocks, mdWrappers, advancedData, exampleClass } from './utils';
 import { UnknownVariableError } from '../src/errors/UnknownVariable';
 import { UnexpectedModifierError } from '../src/errors/UnexpectedModifier';
 import { MissingUrlError } from '../src/errors/MissingUrl';
 import { MissingAbbreviationError } from '../src/errors/MissingAbbreviation';
 
 const { p, pre, code, strong } = htmlBlocks;
+const withClassNameString = '(with className)';
+type TheyParams = { src: string; expected: string; data: Record<string, any> };
+
+const they = (statement: string, { src, expected, data }: TheyParams) => {
+  const run = (className?: string) => {
+    const replace = className ? `<span class="${className}">$1</span>` : '$1';
+    const actuallyExpected = p(expected.replace(/<#>(.*?)<\/#>/g, replace));
+    expect(render({ data, className }, src)).toStrictEqual(actuallyExpected);
+  };
+
+  it(statement, () => {
+    run();
+  });
+
+  it(`${statement} ${withClassNameString}`, () => {
+    run(exampleClass);
+  });
+};
 
 describe('Rule', () => {
   describe('base behaviour', () => {
     const baseInput = '**Includes #{simple} and #{rich|link}**';
 
-    it('should transform correctly when everything is fine', () => {
-      const src = baseInput;
-      const output = 'Includes my simple value and <a href="https://github.com">GitHub</a>';
-      const expected = p(strong(output));
-      expect(render({ data: simpleData }, src)).toStrictEqual(expected);
+    they('should transform correctly when everything is fine', {
+      src: '**Includes #{simple} and #{rich|link}**',
+      data: simpleData,
+      expected: strong(
+        'Includes <#>my simple value</#> and <#><a href="https://github.com">GitHub</a></#>',
+      ),
     });
 
     describe('using modifiers names', () => {
-      it('should correctly create abbreviations', () => {
-        const src = '**Includes #{rich|abbr}**';
-        const output = 'Includes <abbr title="GitHub">GH</abbr>';
-        const expected = p(strong(output));
-        expect(render({ data: simpleData }, src)).toStrictEqual(expected);
+      const data = simpleData;
+
+      they('should correctly create abbreviations', {
+        data,
+        src: '**Includes #{rich|abbr}**',
+        expected: strong('Includes <#><abbr title="GitHub">GH</abbr></#>'),
       });
 
-      it('should correctly create abbreviations inside links', () => {
-        const src = '**Includes #{rich|link|abbr}**';
-        const output = 'Includes <a href="https://github.com"><abbr title="GitHub">GH</abbr></a>';
-        const expected = p(strong(output));
-        expect(render({ data: simpleData }, src)).toStrictEqual(expected);
+      they('should correctly create abbreviations inside links', {
+        data,
+        src: '**Includes #{rich|link|abbr}**',
+        expected: strong(
+          'Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>',
+        ),
       });
     });
 
     describe('using modifiers aliases', () => {
-      it('should correctly create abbreviations', () => {
-        const src = '**Includes #{rich|-}**';
-        const output = 'Includes <abbr title="GitHub">GH</abbr>';
-        const expected = p(strong(output));
-        expect(render({ data: simpleData }, src)).toStrictEqual(expected);
+      const data = simpleData;
+
+      they('should correctly create abbreviations', {
+        data,
+        src: '**Includes #{rich|-}**',
+        expected: strong('Includes <#><abbr title="GitHub">GH</abbr></#>'),
       });
 
-      it('should correctly create abbreviations inside links', () => {
-        const src = '**Includes #{rich|#|-}**';
-        const output = 'Includes <a href="https://github.com"><abbr title="GitHub">GH</abbr></a>';
-        const expected = p(strong(output));
-        expect(render({ data: simpleData }, src)).toStrictEqual(expected);
+      they('should correctly create abbreviations inside links', {
+        data,
+        src: '**Includes #{rich|#|-}**',
+        expected: strong(
+          'Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>',
+        ),
       });
     });
 
-    it('should work with a more advanced example', () => {
-      const src =
+    they('should work with a more advanced example', {
+      data: advancedData,
+      src:
         `Founded in #{since}, #{who|#} is the United Nations agency that connects nations,` +
         ` partners and people to promote health, keep the world safe and serve the vulnerable -` +
         ` so everyone, everywhere can attain the highest level of health.` +
         `\n\n` +
         ` #{who|-} leads global efforts to expand universal health coverage.` +
         ` We direct and coordinate the world's response to health emergencies.
-      `;
-      const expected =
+    `,
+      expected:
         p(
-          `Founded in 1948, <a href="https://www.who.int">World Health Organization</a> is the United Nations` +
+          `Founded in <#>1948</#>, <#><a href="https://www.who.int">World Health Organization</a></#> is the United Nations` +
             ` agency that connects nations, partners and people to promote health, keep the world safe and serve` +
             ` the vulnerable - so everyone, everywhere can attain the highest level of health.`,
         ) +
         p(
-          `<abbr title="World Health Organization">WHO</abbr> leads global efforts to expand universal health` +
+          `<#><abbr title="World Health Organization">WHO</abbr></#> leads global efforts to expand universal health` +
             ` coverage. We direct and coordinate the world's response to health emergencies.`,
-        );
-
-      expect(render({ data: advancedData }, src)).toStrictEqual(expected);
+        ),
     });
 
     it('should not transform when used withing inline code', () => {

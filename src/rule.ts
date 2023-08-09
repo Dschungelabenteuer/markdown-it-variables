@@ -32,19 +32,34 @@ function parseVariableContent(content: VariableContent, lexicon: Lexicon) {
  * wrapped by relevant markup depending on the potentially provided modifiers.
  * @param content Raw content of the variable.
  * @param context Context of the plugin.
+ * @param className Base class name.
  * @note At this stage, all variables have already been validated when setting the
  * plugin's context. Any malformatted variables were already excluded from the lexicon
  * and the user warned about them, so we don't need to re-check variable types.
  */
-function getVariableContent(content: VariableContent, context: PluginContext): string {
+function getVariableContent(
+  content: VariableContent,
+  context: PluginContext,
+  className: PluginOptions['className'],
+): string {
   try {
     const { key, variable, modifiers } = parseVariableContent(content, context.lexicon);
-    return isSimple(variable)
-      ? getSimpleContent(key, variable, modifiers, context)
-      : getRichContent(key, variable, modifiers, context);
+    return wrapClass(
+      isSimple(variable)
+        ? getSimpleContent(key, variable, modifiers, context)
+        : getRichContent(key, variable, modifiers, context),
+      className,
+    );
   } catch (error: unknown) {
     return handleError(error, context, content);
   }
+}
+
+/**
+ * Wraps the variable output in a span with specified class name (when specified).
+ */
+function wrapClass(content: string, className?: PluginOptions['className']) {
+  return className ? `<span class="${className}">${content}</span>` : content;
 }
 
 /**
@@ -70,7 +85,7 @@ export function createVariableRule(md: MarkdownIt, options: PluginOptions) {
     // Create a token for the inline rule
     const token = state.push(baseRendererName, '', 0);
     const content = state.src.slice(start, end);
-    token.content = getVariableContent(content, context);
+    token.content = getVariableContent(content, context, options.className);
 
     // Move right after the end delimiter to get rid of it.
     state.pos = end + ruleEndsWith.length;
