@@ -62,5 +62,8 @@
   },
   "peerDependencies": {
     "markdown-it": "^13.0.1"
+  },
+  "dependencies": {
+    "markdown-it-variables": "link:"
   }
 }
