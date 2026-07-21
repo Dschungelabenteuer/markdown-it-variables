@@ -1,6 +1,6 @@
 {
   "name": "markdown-it-variables",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Use text/link/abbreviations variables in your markdown files",
   "keywords": [
     "abbreviations",

@@ -1,5 +1,11 @@
 # markdown-it-variables
 
+## 2.0.1
+
+### Patch Changes
+
+- dcdd545: Fixed package exports
+
 ## 2.0.0
 
 ### Major Changes
