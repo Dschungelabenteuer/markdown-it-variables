@@ -46,7 +46,7 @@
     "test:coverage": "vitest run --coverage",
     "format": "oxfmt --write",
     "check": "pnpm format && pnpm lint && pnpm test",
-    "changeset:release": "pnpm build && changeset publish",
+    "changeset:release": "pnpm build && pnpm stage publish",
     "changeset:version": "changeset version && pnpm install --lockfile-only"
   },
   "devDependencies": {
