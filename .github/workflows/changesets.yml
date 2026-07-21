@@ -5,12 +5,12 @@ on:
 jobs:
   changesets:
     name: Changesets
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install node & pnpm dependencies
         uses: ./.github/actions/install
