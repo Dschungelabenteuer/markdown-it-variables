@@ -56,11 +56,6 @@ Modifiers that may be applied to both simple and rich variables.
       <td><code>^</code></td>
       <td>Capitalizes the first letter of the variable.</td>
     </tr>
-    <tr>
-      <td><code>link</code></td>
-      <td><code>#</code></td>
-      <td>Displays the final content of the variable as a link to provided <code>url</code></td>
-    </tr>
   </tbody>
 </table>
 
