@@ -37,26 +37,16 @@ export const mdWrappers = {
 
 export const simpleData = {
   simple: 'my simple value',
-  rich: {
-    url: 'https://github.com',
-    abbr: 'GH',
-    label: 'GitHub',
-  },
+  richLowercase: { url: 'https://github.com/Dschungelabenteuer/', label: 'my profile' },
+  rich: { url: 'https://github.com', abbr: 'GH', label: 'GitHub' },
   richWithoutShort: {
     label: 'Rich Without Short',
     url: 'https://www.youtube.com/watch?v=378f9Tx5BYM',
   },
-  richWithoutLink: {
-    label: 'Rich Without Link',
-    abbr: 'EWU',
-  },
+  richWithoutLink: { label: 'Rich Without Link', abbr: 'EWU' },
 };
 
 export const advancedData = {
   since: '1948',
-  who: {
-    url: 'https://www.who.int',
-    abbr: 'WHO',
-    label: 'World Health Organization',
-  },
+  who: { url: 'https://www.who.int', abbr: 'WHO', label: 'World Health Organization' },
 };

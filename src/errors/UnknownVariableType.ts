@@ -13,7 +13,7 @@ export class UnknownVariableTypeError extends Error {
         '- simple (resolve to a simple string)',
         '- rich (resolve to an actual object)',
         `Instead, it appears to be of type "${getInvalidType()}"`,
-      ].join('\n'),
+      ].join('\n')
     );
 
     this.name = 'UnknownVariableTypeError';

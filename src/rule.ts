@@ -40,7 +40,7 @@ function parseVariableContent(content: VariableContent, lexicon: Lexicon) {
 function getVariableContent(
   content: VariableContent,
   context: PluginContext,
-  className: PluginOptions['className'],
+  className: PluginOptions['className']
 ): string {
   try {
     const { key, variable, modifiers } = parseVariableContent(content, context.lexicon);
@@ -48,7 +48,7 @@ function getVariableContent(
       isSimple(variable)
         ? getSimpleContent(key, variable, modifiers, context)
         : getRichContent(key, variable, modifiers, context),
-      className,
+      className
     );
   } catch (error: unknown) {
     return handleError(error, context, content);
@@ -82,7 +82,7 @@ export function createVariableRule(md: MarkdownIt, options: PluginOptions) {
     let end = start + 1;
     while (end < state.src.length && state.src[end] !== ruleEndsWith) end += 1;
 
-    // Create a token for the inline rule
+    // Create a token for the inline rule.
     const token = state.push(baseRendererName, '', 0);
     const content = state.src.slice(start, end);
     token.content = getVariableContent(content, context, options.className);

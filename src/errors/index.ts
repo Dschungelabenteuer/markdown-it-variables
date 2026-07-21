@@ -2,7 +2,7 @@ import type { PluginContext } from '../context';
 import type { VariableContent } from '../types';
 import { UnknownVariableError } from './UnknownVariable';
 import { UnknownVariableTypeError } from './UnknownVariableType';
-import { UnexpectedModifierError } from './UnexpectedModifier';
+import { UnexpectedRichModifierError } from './UnexpectedRichModifierError';
 import { MissingAbbreviationError } from './MissingAbbreviation';
 import { MissingUrlError } from './MissingUrl';
 
@@ -10,7 +10,7 @@ import { MissingUrlError } from './MissingUrl';
 const errors = {
   UnknownVariableError,
   UnknownVariableTypeError,
-  UnexpectedModifierError,
+  UnexpectedRichModifierError,
   MissingAbbreviationError,
   MissingUrlError,
 };
@@ -19,7 +19,7 @@ const errors = {
 export type InternalErrors =
   | UnknownVariableError
   | UnknownVariableTypeError
-  | UnexpectedModifierError
+  | UnexpectedRichModifierError
   | MissingAbbreviationError
   | MissingUrlError;
 
@@ -44,7 +44,7 @@ export const handleError = (error: unknown, context: PluginContext, content?: Va
   if (!caught) throw error;
 
   // If error got caught and is not throwing, fallback to original content or empty string.
-  return `#{${content}}` ?? '';
+  return `#{${content}}`;
 };
 
 export default errors;

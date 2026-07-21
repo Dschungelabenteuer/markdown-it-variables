@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { render, simpleData, htmlBlocks, mdWrappers, advancedData, exampleClass } from './utils';
 import { UnknownVariableError } from '../src/errors/UnknownVariable';
-import { UnexpectedModifierError } from '../src/errors/UnexpectedModifier';
+import { UnexpectedRichModifierError } from '../src/errors/UnexpectedRichModifierError';
 import { MissingUrlError } from '../src/errors/MissingUrl';
 import { MissingAbbreviationError } from '../src/errors/MissingAbbreviation';
 
@@ -33,14 +33,26 @@ describe('Rule', () => {
       src: '**Includes #{simple} and #{rich|link}**',
       data: simpleData,
       expected: p(
-        strong(
-          'Includes <#>my simple value</#> and <#><a href="https://github.com">GitHub</a></#>',
-        ),
+        strong('Includes <#>my simple value</#> and <#><a href="https://github.com">GitHub</a></#>')
       ),
     });
 
     describe('using modifiers names', () => {
       const data = simpleData;
+
+      they('should correctly uppercase first letter', {
+        data,
+        src: '**Includes #{simple|ucfirst}**',
+        expected: p(strong('Includes <#>My simple value</#>')),
+      });
+
+      they('should correctly uppercase first letter inside links', {
+        data,
+        src: '**Includes #{richLowercase|ucfirst|link}**',
+        expected: p(
+          strong('Includes <#><a href="https://github.com/Dschungelabenteuer/">My profile</a></#>')
+        ),
+      });
 
       they('should correctly create abbreviations', {
         data,
@@ -52,13 +64,27 @@ describe('Rule', () => {
         data,
         src: '**Includes #{rich|link|abbr}**',
         expected: p(
-          strong('Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>'),
+          strong('Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>')
         ),
       });
     });
 
     describe('using modifiers aliases', () => {
       const data = simpleData;
+
+      they('should correctly uppercase first letter', {
+        data,
+        src: '**Includes #{simple|^}**',
+        expected: p(strong('Includes <#>My simple value</#>')),
+      });
+
+      they('should correctly uppercase first letter inside links', {
+        data,
+        src: '**Includes #{richLowercase|^|#}**',
+        expected: p(
+          strong('Includes <#><a href="https://github.com/Dschungelabenteuer/">My profile</a></#>')
+        ),
+      });
 
       they('should correctly create abbreviations', {
         data,
@@ -70,7 +96,7 @@ describe('Rule', () => {
         data,
         src: '**Includes #{rich|#|-}**',
         expected: p(
-          strong('Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>'),
+          strong('Includes <#><a href="https://github.com"><abbr title="GitHub">GH</abbr></a></#>')
         ),
       });
     });
@@ -89,11 +115,11 @@ describe('Rule', () => {
         p(
           `Founded in <#>1948</#>, <#><a href="https://www.who.int">World Health Organization</a></#> is the United Nations` +
             ` agency that connects nations, partners and people to promote health, keep the world safe and serve` +
-            ` the vulnerable - so everyone, everywhere can attain the highest level of health.`,
+            ` the vulnerable - so everyone, everywhere can attain the highest level of health.`
         ) +
         p(
           `<#><abbr title="World Health Organization">WHO</abbr></#> leads global efforts to expand universal health` +
-            ` coverage. We direct and coordinate the world's response to health emergencies.`,
+            ` coverage. We direct and coordinate the world's response to health emergencies.`
         ),
     });
 
@@ -121,21 +147,14 @@ describe('Rule', () => {
     it('should not throw if severity is set to error', () => {
       const src = baseInput;
       expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow(
-        UnknownVariableError,
+        UnknownVariableError
       );
     });
 
     it('should ignore if severity is set to error but "ignoreMissingVariables" set to true', () => {
       const src = baseInput;
       expect(
-        render(
-          {
-            data: simpleData,
-            severity: 'error',
-            ignoreMissingVariables: true,
-          },
-          src,
-        ),
+        render({ data: simpleData, severity: 'error', ignoreMissingVariables: true }, src)
       ).toStrictEqual(expected);
     });
 
@@ -146,7 +165,7 @@ describe('Rule', () => {
     });
   });
 
-  describe('when modifiers are set on simple variables', () => {
+  describe('when rich modifiers are set on simple variables', () => {
     const baseInput = '**Includes #{simple|abbr}**';
     const output = 'Includes my simple value';
     const expected = `${p(strong(output))}`;
@@ -154,7 +173,7 @@ describe('Rule', () => {
     it('should throw if severity is set to error', () => {
       const src = baseInput;
       expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow(
-        UnexpectedModifierError,
+        UnexpectedRichModifierError
       );
     });
 
@@ -190,7 +209,7 @@ describe('Rule', () => {
     it('should throw if severity is set to error', () => {
       const src = baseInput;
       expect(() => render({ data: simpleData, severity: 'error' }, src)).toThrow(
-        MissingAbbreviationError,
+        MissingAbbreviationError
       );
     });
 

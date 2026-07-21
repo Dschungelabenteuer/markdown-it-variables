@@ -28,11 +28,7 @@ import { variablesPlugin } from 'markdown-it-variables';
 
 const md = mardownIt().use(variablesPlugin, {
   since: '1948',
-  who: {
-    url: 'https://www.who.int',
-    abbr: 'WHO',
-    label: 'World Health Organization',
-  },
+  who: { url: 'https://www.who.int', abbr: 'WHO', label: 'World Health Organization' },
 });
 ```
 
@@ -41,6 +37,36 @@ apply a list of pipe-separated modifiers: `#{who|abbr|link}`, and use modifier a
 more concise: `#{who|-|#}`.
 
 ### Modifiers
+
+#### Simple modifiers
+
+Modifiers that may be applied to both simple and rich variables.
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Alias</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ucfirst</code></td>
+      <td><code>^</code></td>
+      <td>Capitalizes the first letter of the variable.</td>
+    </tr>
+    <tr>
+      <td><code>link</code></td>
+      <td><code>#</code></td>
+      <td>Displays the final content of the variable as a link to provided <code>url</code></td>
+    </tr>
+  </tbody>
+</table>
+
+#### Rich modifiers
+
+Modifiers that may only be applied to rich variables.
 
 <table>
   <thead>
@@ -145,7 +171,7 @@ Here is an overview of how different severities change the behaviour of the plug
       <td style="text-align: center">⏭️</td>
     </tr>
     <tr>
-      <td>Setting a modifier on a simple variable</td>
+      <td>Setting a rich modifier on a simple variable</td>
       <td style="text-align: center">❌</td>
       <td style="text-align: center">✅❕</td>
       <td style="text-align: center">✅</td>

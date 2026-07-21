@@ -1,4 +1,0 @@
-{
-  "extends": ["@yungezeit/eslint-config-typescript", "prettier"],
-  "ignorePatterns": ["README.md", ".github"]
-}

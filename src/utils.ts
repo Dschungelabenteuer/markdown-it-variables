@@ -32,6 +32,12 @@ const createAttributes = (attributes: HTMLTagDefinition['attributes']) => {
   if (!attributes) return '';
   return Object.keys(attributes).reduce(
     (output, attribute) => `${output} ${attribute}="${attributes[attribute]}"`,
-    '',
+    ''
   );
 };
+
+/**
+ * Uppercase the first character of a string.
+ * @param str String to transform.
+ */
+export const ucfirst = (str: string) => str.charAt(0).toUpperCase() + str.slice(1);

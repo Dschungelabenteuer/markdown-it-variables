@@ -3,9 +3,11 @@
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
 
-  "editor.codeActionsOnSave": { "source.fixAll.oxc": "explicit" },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit"
+  },
 
   // So you're still using them for legacy codebases, right? Not this time!
   "eslint.enable": false,
-  "prettier.enable": false
+  "prettier.enable": false,
 }

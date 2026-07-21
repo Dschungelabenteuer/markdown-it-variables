@@ -1,6 +1,10 @@
-import type { SimpleVariable, VariableKey, VariableModifier } from '../types';
+import type { SimpleVariable, VariableKey } from '../types';
 import type { PluginContext } from '../context';
 import Errors from '../errors';
+import type { VariableModifier } from '../modifiers';
+import { hasUcfirstModifier } from '../modifiers/simple';
+import { hasRichModifier } from '../modifiers/rich';
+import { ucfirst } from '../utils';
 
 /**
  * Determines whether a given variable is a simple variable.
@@ -23,12 +27,12 @@ export function getSimpleContent(
   key: VariableKey,
   variable: SimpleVariable,
   modifiers: VariableModifier[],
-  context: PluginContext,
+  context: PluginContext
 ): string {
-  if (modifiers.length) {
-    const error = new Errors.UnexpectedModifierError(key);
+  if (hasRichModifier(modifiers)) {
+    const error = new Errors.UnexpectedRichModifierError(key);
     context.raise(error);
   }
 
-  return variable;
+  return hasUcfirstModifier(modifiers) ? ucfirst(variable) : variable;
 }

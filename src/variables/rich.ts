@@ -1,11 +1,10 @@
-import type { RichVariable, RichVariableMap, VariableKey, VariableModifier } from '../types';
+import type { RichVariable, RichVariableMap, VariableKey } from '../types';
 import type { PluginContext } from '../context';
-import { createHtmlTag, isObject } from '../utils';
+import { createHtmlTag, isObject, ucfirst } from '../utils';
 import Errors from '../errors';
-
-type HasModifier = (modifiers: VariableModifier[]) => boolean;
-const hasAbbrModifier: HasModifier = (m) => m.includes('abbr') || m.includes('-');
-const hasLinkModifier: HasModifier = (m) => m.includes('link') || m.includes('#');
+import type { VariableModifier } from '../modifiers';
+import { hasAbbrModifier, hasLinkModifier } from '../modifiers/rich';
+import { hasUcfirstModifier } from '../modifiers/simple';
 
 /**
  * Determines whether a given variable is a rich variable.
@@ -26,9 +25,10 @@ export function getRichLabel(
   key: VariableKey,
   variable: RichVariableMap,
   modifiers: VariableModifier[],
-  context: PluginContext,
+  context: PluginContext
 ): string {
-  const label = variable.get('label')!;
+  const $label = variable.get('label')!;
+  const label = hasUcfirstModifier(modifiers) ? ucfirst($label) : $label;
 
   if (hasAbbrModifier(modifiers)) {
     const abbr = variable.get('abbr');
@@ -40,13 +40,7 @@ export function getRichLabel(
       return label;
     }
 
-    return createHtmlTag({
-      tagName: 'abbr',
-      content: abbr,
-      attributes: {
-        title: label,
-      },
-    });
+    return createHtmlTag({ tagName: 'abbr', content: abbr, attributes: { title: label } });
   }
 
   return label;
@@ -63,7 +57,7 @@ export function getRichFormatter(
   key: VariableKey,
   variable: RichVariableMap,
   modifiers: VariableModifier[],
-  context: PluginContext,
+  context: PluginContext
 ): (label: string) => string {
   return (label: string) => {
     let output = label;
@@ -71,13 +65,7 @@ export function getRichFormatter(
     if (hasLinkModifier(modifiers)) {
       const href = variable.get('url');
       if (href) {
-        output = createHtmlTag({
-          tagName: 'a',
-          content: output,
-          attributes: {
-            href,
-          },
-        });
+        output = createHtmlTag({ tagName: 'a', content: output, attributes: { href } });
       } else {
         context.raise(new Errors.MissingUrlError(key));
       }
@@ -98,7 +86,7 @@ export function getRichContent(
   key: VariableKey,
   variable: RichVariableMap,
   modifiers: VariableModifier[],
-  context: PluginContext,
+  context: PluginContext
 ): string {
   const label = getRichLabel(key, variable, modifiers, context);
   const formatter = getRichFormatter(key, variable, modifiers, context);

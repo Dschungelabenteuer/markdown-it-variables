@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "endOfLine": "lf",
+  "useTabs": false,
+  "tabWidth": 2,
+  "printWidth": 100,
+  "singleQuote": true,
+  "arrowParens": "always",
+  "quoteProps": "as-needed",
+  "objectWrap": "collapse",
+  "trailingComma": "es5",
+  "jsxSingleQuote": true,
+  "embeddedLanguageFormatting": "auto",
+  "singleAttributePerLine": true,
+  "bracketSameLine": false,
+  "bracketSpacing": true,
+  "ignorePatterns": [
+    "**/*.tokens.json",
+    "**/rust-napi/build.rs",
+    "**/rust-napi/browser.js",
+    "**/rust-napi/index.js",
+    "**/rust-napi/index.d.ts",
+    "**/rust-napi/rust-napi.wasi.cjs",
+    "**/rust-napi/rust-napi.wasi-browser.js",
+    "**/rust-napi/wasi-worker-browser.mjs",
+    "**/rust-napi/wasi-worker.mjs"
+  ]
+}

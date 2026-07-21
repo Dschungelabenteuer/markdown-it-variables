@@ -10,7 +10,7 @@ describe('Plugin', () => {
 
   it('should throw if options were set but do not include any variable', () => {
     expect(() => MarkdownIt().use(variablesPlugin, { data: undefined })).toThrow(
-      MissingVariablesOptions,
+      MissingVariablesOptions
     );
   });
 

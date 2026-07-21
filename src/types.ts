@@ -1,4 +1,5 @@
-import type BaseStateInline from 'markdown-it/lib/rules_inline/state_inline';
+import type BaseStateInline from 'markdown-it/lib/rules_inline/state_inline.mjs';
+import type { VariableModifier } from './modifiers';
 
 /** Rule function's signature. */
 export type RuleFunction = (state: BaseStateInline, silent: boolean) => void;
@@ -8,15 +9,6 @@ export type VariableContent = string;
 
 /** Lexicon (map of variables). */
 export type Lexicon = Map<string, SimpleVariable | RichVariableMap>;
-
-/** Supported variable modifiers. */
-export type VariableModifier =
-  // When you only want to display the abbreviation.
-  | 'abbr'
-  | '-'
-  //  When you want to link to a reference.
-  | 'link'
-  | '#';
 
 /** Type of a variable key. */
 export type VariableKey = string;
